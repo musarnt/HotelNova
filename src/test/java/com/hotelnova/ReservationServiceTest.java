@@ -7,6 +7,7 @@ import com.hotelnova.room.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -246,6 +247,11 @@ class ReservationServiceTest {
         }
 
         @Override
+        public void update(Reservation reservation, Connection conn) {
+            update(reservation);
+        }
+
+        @Override
         public Optional<Reservation> findById(int id) {
             return reservations.stream().filter(r -> r.getId() == id).findFirst();
         }
@@ -304,6 +310,12 @@ class ReservationServiceTest {
         public void update(Room r) {
             rooms.removeIf(x -> x.getId() == r.getId());
             rooms.add(r);
+        }
+
+        @Override
+        public void updateStatus(int id, RoomStatus status, Connection conn) {
+            // delegas al método sin conexión o implementas la lógica del mock
+            updateStatus(id, status);
         }
 
         @Override

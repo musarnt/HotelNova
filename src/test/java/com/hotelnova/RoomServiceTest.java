@@ -5,6 +5,7 @@ import com.hotelnova.room.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -82,6 +83,12 @@ class RoomServiceTest {
         public void update(Room room) {
             rooms.removeIf(r -> r.getId() == room.getId());
             rooms.add(room);
+        }
+
+        @Override
+        public void updateStatus(int id, RoomStatus status, Connection conn) {
+            // delegas al método sin conexión o implementas la lógica del mock
+            updateStatus(id, status);
         }
 
         @Override
